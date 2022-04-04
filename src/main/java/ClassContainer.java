@@ -20,6 +20,10 @@ public class ClassContainer {
         this.classrooms.remove(name);
     }
 
+    public Classroom getClassroom(String name) {
+        return this.classrooms.get(name);
+    }
+
     public void  summary() {
         this.output.println("----- Pojemnik na klasy: -----");
         this.classrooms.forEach((key, classroom) -> {

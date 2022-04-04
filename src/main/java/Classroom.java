@@ -1,3 +1,4 @@
+import java.io.PrintStream;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -6,10 +7,12 @@ public class Classroom {
     private String name;
     private List<Student> students = new ArrayList<Student>();
     private int maxStudentsCount;
+    private final PrintStream output;
 
     public Classroom(String name, int maxStudentsCount) {
         this.name = name;
         this.maxStudentsCount = maxStudentsCount;
+        this.output = System.out;
     }
 
     public void addStudent(Student student) {
@@ -76,10 +79,6 @@ public class Classroom {
         return (ArrayList<Student>) this.students.stream().filter(el -> state == el.getStatus()).collect(Collectors.toList());
     }
 
-    public void summary() {
-        this.students.forEach(Student::print);
-    }
-
     public ArrayList<Student> sortByName() {
         return (ArrayList<Student>) this.students.stream().sorted(Comparator.comparing(Student::getLastname)).collect(Collectors.toList());
     }
@@ -111,5 +110,13 @@ public class Classroom {
 
     private int getStudentsCount() {
         return this.students.size();
+    }
+
+    public void  summary() {
+        this.output.println("----- Klasa: " + this.name + ": -----");
+        String fillInfo = "Max liczba uczniow: " +  this.maxStudentsCount + ", wypełnienie: " + this.getPercentageFilling();
+        this.output.println(fillInfo);
+        this.students.forEach(Student::print);
+        this.output.println("-------------------------------------");
     }
 }
