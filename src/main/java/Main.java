@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class Main {
@@ -10,7 +11,7 @@ public class Main {
             final String CLASS_NAME_2 = "klasa2";
             ClassContainer classContainer = new ClassContainer();
             classContainer.addClassroom(CLASS_NAME_1, 2);
-            classContainer.addClassroom(CLASS_NAME_2, 2);
+            classContainer.addClassroom(CLASS_NAME_2, 20);
 
             classContainer.summary();
             classContainer.removeClassroom(CLASS_NAME_1);
@@ -20,6 +21,15 @@ public class Main {
             Student s2 = new Student("Jacek", "Windak", 1999, 0, StudentCondition.OK);
             Student s3 = new Student("Anna", "Brzózka", 1999, 0, StudentCondition.OK);
             Student s4 = new Student("Anna", "Nowakowska", 1999, 0, StudentCondition.OK);
+
+            classContainer.addClassroom(CLASS_NAME_2, 20);
+
+            List<Classroom> emptyClassrooms = classContainer.findEmpty();
+            System.out.println("---------------------");
+            System.out.println("puste klasy: ");
+            emptyClassrooms.forEach(Classroom::summary);
+            System.out.println("---------------------");
+
 
             Classroom classroom1 = classContainer.getClassroom(CLASS_NAME_2);
             classroom1.addStudent(s1);
@@ -61,7 +71,13 @@ public class Main {
 
             ArrayList<Student> sortedStudents = classroom1.sortByName();
             System.out.println("---------------------");
-            System.out.println("posortowani uczniowie: ");
+            System.out.println("posortowani uczniowie po nazwisku: ");
+            sortedStudents.forEach(Student::print);
+            System.out.println("---------------------");
+
+            sortedStudents = classroom1.sortByPoints();
+            System.out.println("---------------------");
+            System.out.println("posortowani uczniowie po pkt malejaco: ");
             sortedStudents.forEach(Student::print);
             System.out.println("---------------------");
 

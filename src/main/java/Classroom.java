@@ -108,7 +108,7 @@ public class Classroom {
 
     public ArrayList<Student> sortByPoints() {
         return (ArrayList<Student>) this.students.stream()
-                .sorted(Comparator.comparing(Student::getPoints).reversed())
+                .sorted((new StudentPointsComparator()).reversed())
                 .collect(Collectors.toList());
     }
 
@@ -122,6 +122,10 @@ public class Classroom {
         this.output.println(fillInfo);
         this.students.forEach(Student::print);
         this.output.println("-------------------------------------");
+    }
+
+    public boolean isEmpty() {
+        return this.students.isEmpty();
     }
 
     public double getPercentageFilling() {

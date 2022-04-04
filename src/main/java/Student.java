@@ -1,13 +1,5 @@
 public class Student implements Printable, Comparable<Student> {
 
-    public void addPoints(double points) {
-        this.points += points;
-    }
-
-    public double getPoints() {
-        return this.points;
-    }
-
     private String name;
     private String lastname;
     private int birthYear;
@@ -20,6 +12,14 @@ public class Student implements Printable, Comparable<Student> {
         this.birthYear = birthYear;
         this.points = points;
         this.state = state;
+    }
+
+    public void addPoints(double points) {
+        this.points += points;
+    }
+
+    public double getPoints() {
+        return this.points;
     }
 
     @Override

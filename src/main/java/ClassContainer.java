@@ -1,5 +1,7 @@
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ClassContainer {
@@ -8,7 +10,7 @@ public class ClassContainer {
     private final PrintStream output;
 
     public ClassContainer() {
-        this.classrooms = new HashMap<String, Classroom>();
+        this.classrooms = new HashMap<>();
         this.output = System.out;
     }
 
@@ -30,6 +32,16 @@ public class ClassContainer {
             this.output.println("Klasa: " + key + ", wypełnienie: " + classroom.getPercentageFilling() + "%");
         } );
         this.output.println("------------------------------");
+    }
+
+    public List<Classroom> findEmpty() {
+        List<Classroom> emptyClassrooms = new ArrayList<>();
+        this.classrooms.forEach((k,c) -> {
+            if (c.isEmpty()) {
+                emptyClassrooms.add(c);
+            }
+        });
+        return emptyClassrooms;
     }
 
 }
