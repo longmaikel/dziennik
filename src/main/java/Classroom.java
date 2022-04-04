@@ -4,9 +4,9 @@ import java.util.stream.Collectors;
 
 public class Classroom {
 
-    private String name;
-    private List<Student> students = new ArrayList<Student>();
-    private int maxStudentsCount;
+    private final String name;
+    private final List<Student> students = new ArrayList<>();
+    private final int maxStudentsCount;
     private final PrintStream output;
     private final PrintStream error;
 
@@ -20,10 +20,12 @@ public class Classroom {
     public void addStudent(Student student) {
         if (this.isFull()) {
             this.error.println("Klasa jest wypełniona po brzegi.");
+            return;
         }
 
         if (this.containsStudent(student)) {
             this.error.println("Uczen zostal juz dodany do klasy.");
+            return;
         }
 
         this.students.add(student);
@@ -74,13 +76,13 @@ public class Classroom {
                 .filter(el -> 0 == el.compareTo(student))
                 .findFirst();
 
-        if (optionalStudent.isEmpty()){
+        if (optionalStudent.isEmpty()) {
             return;
         }
 
         student.setStatus(state);
     }
-    
+
     public Optional<Student> search(String lastname) {
         return this.students.stream()
                 .filter(el -> lastname.equals(el.getLastname()))
@@ -116,9 +118,9 @@ public class Classroom {
         return this.maxStudentsCount;
     }
 
-    public void  summary() {
+    public void summary() {
         this.output.println("----- Klasa: " + this.name + ": -----");
-        String fillInfo = "Max liczba uczniow: " +  this.maxStudentsCount + ", wypełnienie: " + this.getPercentageFilling();
+        String fillInfo = "Max liczba uczniow: " + this.maxStudentsCount + ", wypełnienie: " + this.getPercentageFilling();
         this.output.println(fillInfo);
         this.students.forEach(Student::print);
         this.output.println("-------------------------------------");
@@ -129,7 +131,7 @@ public class Classroom {
     }
 
     public double getPercentageFilling() {
-        return (double)this.getStudentsCount() / (double)this.max() * 100.0;
+        return (double) this.getStudentsCount() / (double) this.max() * 100.0;
     }
 
     private boolean isFull() {

@@ -18,7 +18,7 @@ public class ClassContainer {
         this.classrooms.put(name, new Classroom(name, maxStudentsCount));
     }
 
-    public void  removeClassroom(String name) {
+    public void removeClassroom(String name) {
         this.classrooms.remove(name);
     }
 
@@ -26,17 +26,15 @@ public class ClassContainer {
         return this.classrooms.get(name);
     }
 
-    public void  summary() {
+    public void summary() {
         this.output.println("----- Pojemnik na klasy: -----");
-        this.classrooms.forEach((key, classroom) -> {
-            this.output.println("Klasa: " + key + ", wypełnienie: " + classroom.getPercentageFilling() + "%");
-        } );
+        this.classrooms.forEach((key, classroom) -> this.output.println("Klasa: " + key + ", wypełnienie: " + classroom.getPercentageFilling() + "%"));
         this.output.println("------------------------------");
     }
 
     public List<Classroom> findEmpty() {
         List<Classroom> emptyClassrooms = new ArrayList<>();
-        this.classrooms.forEach((k,c) -> {
+        this.classrooms.forEach((k, c) -> {
             if (c.isEmpty()) {
                 emptyClassrooms.add(c);
             }

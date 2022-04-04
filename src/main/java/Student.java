@@ -1,10 +1,13 @@
+import java.io.PrintStream;
+
 public class Student implements Printable, Comparable<Student> {
 
-    private String name;
-    private String lastname;
-    private int birthYear;
+    private final String name;
+    private final String lastname;
+    private final int birthYear;
     private double points;
     private StudentCondition state;
+    private final PrintStream output;
 
     public Student(String name, String lastname, int birthYear, double points, StudentCondition state) {
         this.name = name;
@@ -12,6 +15,7 @@ public class Student implements Printable, Comparable<Student> {
         this.birthYear = birthYear;
         this.points = points;
         this.state = state;
+        this.output = System.out;
     }
 
     public void addPoints(double points) {
@@ -24,12 +28,12 @@ public class Student implements Printable, Comparable<Student> {
 
     @Override
     public void print() {
-        System.out.println("Student: " + this.name + " " + this.lastname + " " + this.birthYear + ", points: " + this.points + ", state: " + this.state);
+        this.output.println("Student: " + this.name + " " + this.lastname + " " + this.birthYear + ", points: " + this.points + ", state: " + this.state);
     }
 
     @Override
     public int compareTo(Student o) {
-        if(o.lastname.equals(this.lastname)){
+        if (o.lastname.equals(this.lastname)) {
             return 0;
         }
 
