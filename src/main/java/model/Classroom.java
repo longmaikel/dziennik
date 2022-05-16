@@ -8,15 +8,22 @@ public class Classroom {
 
     private final String name;
     private final List<Student> students = new ArrayList<>();
-    private final int maxStudentsCount;
+    private int maxStudentsCount;
     private final PrintStream output;
     private final PrintStream error;
 
     public Classroom(String name, int maxStudentsCount) {
         this.name = name;
-        this.maxStudentsCount = maxStudentsCount;
+        this.setVolume(maxStudentsCount);
         this.output = System.out;
         this.error = System.err;
+    }
+
+    public Classroom setVolume(int volume) {
+        if (this.isEmpty()) {
+            this.maxStudentsCount = volume;
+        }
+        return this;
     }
 
     public void addStudent(Student student) {

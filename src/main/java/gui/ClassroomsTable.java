@@ -1,12 +1,8 @@
 package gui;
 
 import model.ClassContainer;
-import model.Classroom;
 
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 public class ClassroomsTable {
     private final JTable table;
@@ -16,7 +12,7 @@ public class ClassroomsTable {
 
     public ClassroomsTable() {
         this.classContainer = new ClassContainer();
-        this.model = new ClassroomsTableModel(classContainer.getAll());
+        this.model = new ClassroomsTableModel(this.classContainer.getAll());
 
         this.table = new JTable(this.model);
         this.table.setBounds(30, 40, 200, 300);
@@ -28,6 +24,25 @@ public class ClassroomsTable {
     
     public void addClassroom(String name, int volume) {
         this.classContainer.addClassroom(name, volume);
+        this.model.setClassrooms(this.classContainer.getAll());
+        this.model.fireTableDataChanged();
+    }
+
+    public void editClassroom(String name, int volume) {
+        int selectedRow = this.table.getSelectedRow();
+        if (-1 < selectedRow){
+            String classroomName = (String)this.table.getValueAt(selectedRow, ClassroomsTableModel.COLUMN_NAME);
+            this.classContainer.editClassroom(classroomName, volume);
+            this.model.fireTableDataChanged();
+        }
+    }
+    
+    public void deleteClassroom() {
+        int selectedRow = this.table.getSelectedRow();
+        if (-1 < selectedRow){
+            String classroomName = (String)this.table.getValueAt(selectedRow, ClassroomsTableModel.COLUMN_NAME);
+            this.classContainer.removeClassroom(classroomName);
+        }
     }
 
 }

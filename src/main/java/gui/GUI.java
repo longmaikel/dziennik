@@ -24,6 +24,9 @@ public class GUI implements ActionListener {
     private final JButton sortStudentByPointsBtn;
     private final JPanel mainPanel;
 
+    private final ClassroomsTable classroomsTable;
+    private final JScrollPane classroomTablePanel;
+
 
     public GUI() {
 
@@ -62,13 +65,13 @@ public class GUI implements ActionListener {
         this.mainPanel = new JPanel();
         this.mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
 
-        ClassroomsTable classroomsTable = new ClassroomsTable();
-        JScrollPane ct =  new JScrollPane(classroomsTable.getTable());
+        this.classroomsTable = new ClassroomsTable();
+        this.classroomTablePanel = new JScrollPane(this.classroomsTable.getTable());
 
         ClassroomsTable studentsTable = new ClassroomsTable();
         JScrollPane st =  new JScrollPane(studentsTable.getTable());
 
-        this.mainPanel.add(ct);
+        this.mainPanel.add(this.classroomTablePanel);
         this.mainPanel.add(st);
 
         //Adding Components to the frame.
@@ -97,7 +100,13 @@ public class GUI implements ActionListener {
         String action = e.getActionCommand();
         switch (action) {
             case Actions.ADD_CLASSROOM:
-                System.out.println("asdasd");
+                String name = JOptionPane.showInputDialog(this.frame, "Nazwa");
+                try {
+                    int volume = Integer.parseInt(JOptionPane.showInputDialog(this.frame, "Pojemność:"));
+                    this.classroomsTable.addClassroom(name, volume);
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Niepoprawna pojemność");
+                }
                 break;
         }
 

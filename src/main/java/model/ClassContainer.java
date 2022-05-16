@@ -20,6 +20,11 @@ public class ClassContainer {
         this.classrooms.put(name, new Classroom(name, maxStudentsCount));
     }
 
+    public void editClassroom(String name, int volume) {
+        Classroom classroom = this.getClassroom(name);
+        classroom.setVolume(volume);
+    }
+
     public ArrayList<Classroom> getAll() {
         return new ArrayList<Classroom>(this.classrooms.values());
     }
