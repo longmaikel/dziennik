@@ -24,16 +24,15 @@ public class ClassroomsTable {
     
     public void addClassroom(String name, int volume) {
         this.classContainer.addClassroom(name, volume);
-        this.model.setClassrooms(this.classContainer.getAll());
-        this.model.fireTableDataChanged();
+        this.fireTableDataChanged();
     }
 
-    public void editClassroom(String name, int volume) {
+    public void editClassroom(int volume) {
         int selectedRow = this.table.getSelectedRow();
         if (-1 < selectedRow){
             String classroomName = (String)this.table.getValueAt(selectedRow, ClassroomsTableModel.COLUMN_NAME);
             this.classContainer.editClassroom(classroomName, volume);
-            this.model.fireTableDataChanged();
+            this.fireTableDataChanged();
         }
     }
     
@@ -42,7 +41,13 @@ public class ClassroomsTable {
         if (-1 < selectedRow){
             String classroomName = (String)this.table.getValueAt(selectedRow, ClassroomsTableModel.COLUMN_NAME);
             this.classContainer.removeClassroom(classroomName);
+            this.fireTableDataChanged();
         }
+    }
+
+    public void fireTableDataChanged() {
+        this.model.setClassrooms(this.classContainer.getAll());
+        this.model.fireTableDataChanged();
     }
 
 }

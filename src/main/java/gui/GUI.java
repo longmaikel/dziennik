@@ -108,6 +108,16 @@ public class GUI implements ActionListener {
                     JOptionPane.showMessageDialog(null, "Niepoprawna pojemność");
                 }
                 break;
+            case Actions.EDIT_CLASSROOM:
+                try {
+                    int volume = Integer.parseInt(JOptionPane.showInputDialog(this.frame, "Pojemność:"));
+                    this.classroomsTable.editClassroom(volume);
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Niepoprawna pojemność");
+                }
+                break;
+            case Actions.DELETE_CLASSROOM:
+                this.classroomsTable.deleteClassroom();
         }
 
 
