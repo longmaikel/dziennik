@@ -1,3 +1,5 @@
+package model;
+
 import java.io.PrintStream;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -115,12 +117,12 @@ public class Classroom {
     }
 
     public int max() {
-        return this.maxStudentsCount;
+        return this.getMaxStudentsCount();
     }
 
     public void summary() {
         this.output.println("----- Klasa: " + this.name + ": -----");
-        String fillInfo = "Max liczba uczniow: " + this.maxStudentsCount + ", wypełnienie: " + this.getPercentageFilling();
+        String fillInfo = "Max liczba uczniow: " + this.getMaxStudentsCount() + ", wypełnienie: " + this.getPercentageFilling();
         this.output.println(fillInfo);
         this.students.forEach(Student::print);
         this.output.println("-------------------------------------");
@@ -135,7 +137,7 @@ public class Classroom {
     }
 
     private boolean isFull() {
-        return this.students.size() >= this.maxStudentsCount;
+        return this.students.size() >= this.getMaxStudentsCount();
     }
 
     private boolean hasPlace() {
@@ -147,8 +149,12 @@ public class Classroom {
                 .anyMatch(el -> 0 == el.compareTo(suspicious));
     }
 
-    private int getStudentsCount() {
+    public int getStudentsCount() {
         return this.students.size();
     }
+    public int getMaxStudentsCount() {return this.maxStudentsCount;}
 
+    public String getName() {
+        return  this.name;
+    }
 }

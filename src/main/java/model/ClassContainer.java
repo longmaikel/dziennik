@@ -1,3 +1,5 @@
+package model;
+
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,6 +18,10 @@ public class ClassContainer {
 
     public void addClassroom(String name, int maxStudentsCount) {
         this.classrooms.put(name, new Classroom(name, maxStudentsCount));
+    }
+
+    public ArrayList<Classroom> getAll() {
+        return new ArrayList<Classroom>(this.classrooms.values());
     }
 
     public void removeClassroom(String name) {

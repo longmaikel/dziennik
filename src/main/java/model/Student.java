@@ -1,3 +1,5 @@
+package model;
+
 import java.io.PrintStream;
 
 public class Student implements Printable, Comparable<Student> {
@@ -28,7 +30,7 @@ public class Student implements Printable, Comparable<Student> {
 
     @Override
     public void print() {
-        this.output.println("Student: " + this.name + " " + this.lastname + " " + this.birthYear + ", points: " + this.points + ", state: " + this.state);
+        this.output.println("model.Student: " + this.name + " " + this.lastname + " " + this.birthYear + ", points: " + this.points + ", state: " + this.state);
     }
 
     @Override
