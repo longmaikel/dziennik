@@ -9,5 +9,6 @@ public class Actions {
     public static final String DELETE_STUDENT = "DELETE_STUDENT";
     public static final String STUDENT_SORT_ALPHABET = "STUDENT_SORT_ALPHABET";
     public static final String STUDENT_SORT_POINTS = "STUDENT_SORT_POINTS";
+    public static final String SHOW_STUDENTS = "SHOW_STUDENTS";
 
 }

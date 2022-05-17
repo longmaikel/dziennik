@@ -4,9 +4,9 @@ import java.io.PrintStream;
 
 public class Student implements Printable, Comparable<Student> {
 
-    private final String name;
-    private final String lastname;
-    private final int birthYear;
+    private String name;
+    private String lastname;
+    private int birthYear;
     private double points;
     private StudentCondition state;
     private final PrintStream output;
@@ -52,5 +52,33 @@ public class Student implements Printable, Comparable<Student> {
 
     public StudentCondition getStatus() {
         return this.state;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public int getBirthYear() {
+        return this.birthYear;
+    }
+
+    public Student setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public Student setLastname(String lastname) {
+        this.lastname = lastname;
+        return this;
+    }
+
+    public Student setBirthYear(int birthYear) {
+        this.birthYear = birthYear;
+        return this;
+    }
+
+    public Student setPoints(double points) {
+        this.points = points;
+        return this;
     }
 }

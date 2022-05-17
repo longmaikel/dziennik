@@ -1,8 +1,11 @@
 package gui;
 
 import model.ClassContainer;
+import model.Classroom;
+import model.Student;
 
 import javax.swing.*;
+import java.util.List;
 
 public class ClassroomsTable {
     private final JTable table;
@@ -10,8 +13,8 @@ public class ClassroomsTable {
     private final ClassContainer classContainer;
 
 
-    public ClassroomsTable() {
-        this.classContainer = new ClassContainer();
+    public ClassroomsTable(ClassContainer classContainer) {
+        this.classContainer = classContainer;
         this.model = new ClassroomsTableModel(this.classContainer.getAll());
 
         this.table = new JTable(this.model);
@@ -50,4 +53,23 @@ public class ClassroomsTable {
         this.model.fireTableDataChanged();
     }
 
+    public List<Student> getClassroomStudents() {
+        int selectedRow = this.table.getSelectedRow();
+        if (-1 < selectedRow) {
+            String classroomName = (String)this.table.getValueAt(selectedRow, ClassroomsTableModel.COLUMN_NAME);
+            Classroom classroom = this.classContainer.getClassroom(classroomName);
+            return classroom.getStudents();
+        }
+        return null;
+    }
+
+    public Classroom getSelectedClassroom() {
+        int selectedRow = this.table.getSelectedRow();
+        if (-1 < selectedRow) {
+            String classroomName = (String)this.table.getValueAt(selectedRow, ClassroomsTableModel.COLUMN_NAME);
+            return this.classContainer.getClassroom(classroomName);
+
+        }
+        return null;
+    }
 }

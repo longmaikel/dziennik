@@ -69,7 +69,7 @@ public class Classroom {
         while (iterator.hasNext()) {
             Student listStudent = iterator.next();
 
-            if (0 == listStudent.compareTo(student) && 0 == student.getPoints()) {
+            if (0 == listStudent.compareTo(student) /*&& 0 == student.getPoints()*/) {
                 iterator.remove();
                 return Optional.of(student);
             }
@@ -163,5 +163,9 @@ public class Classroom {
 
     public String getName() {
         return  this.name;
+    }
+
+    public List<Student> getStudents() {
+        return this.students;
     }
 }
