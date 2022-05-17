@@ -72,4 +72,25 @@ public class ClassroomsTable {
         }
         return null;
     }
+
+    public List<Student> sortStudentsByPoints() {
+        int selectedRow = this.table.getSelectedRow();
+        if (-1 < selectedRow) {
+            String classroomName = (String)this.table.getValueAt(selectedRow, ClassroomsTableModel.COLUMN_NAME);
+            Classroom classroom = this.classContainer.getClassroom(classroomName);
+            return classroom.sortByPoints();
+        }
+
+        return null;
+    }
+
+    public List<Student> sortStudentsAlphabet() {
+        int selectedRow = this.table.getSelectedRow();
+        if (-1 < selectedRow) {
+            String classroomName = (String)this.table.getValueAt(selectedRow, ClassroomsTableModel.COLUMN_NAME);
+            Classroom classroom = this.classContainer.getClassroom(classroomName);
+            return classroom.sortByName();
+        }
+        return null;
+    }
 }

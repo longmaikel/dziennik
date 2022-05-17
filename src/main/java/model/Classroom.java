@@ -10,13 +10,11 @@ public class Classroom {
     private final List<Student> students = new ArrayList<>();
     private int maxStudentsCount;
     private final PrintStream output;
-    private final PrintStream error;
 
     public Classroom(String name, int maxStudentsCount) {
         this.name = name;
         this.setVolume(maxStudentsCount);
         this.output = System.out;
-        this.error = System.err;
     }
 
     public Classroom setVolume(int volume) {
@@ -26,15 +24,14 @@ public class Classroom {
         return this;
     }
 
-    public void addStudent(Student student) {
+
+    public void addStudent(Student student) throws FulfilledClassroomException, StudentAlreadyAddedToClassroomException {
         if (this.isFull()) {
-            this.error.println("Klasa jest wypełniona po brzegi.");
-            return;
+            throw new FulfilledClassroomException();
         }
 
         if (this.containsStudent(student)) {
-            this.error.println("Uczen zostal juz dodany do klasy.");
-            return;
+            throw new StudentAlreadyAddedToClassroomException();
         }
 
         this.students.add(student);
@@ -53,10 +50,9 @@ public class Classroom {
         student.addPoints(points);
     }
 
-    public void removePoints(Student student, double points) {
+    public void removePoints(Student student, double points) throws IllegalArgumentException {
         if (points <= 0) {
-            this.error.println("Punkty muszą być liczbą dodatnią");
-            return;
+            throw new IllegalArgumentException("Punkty muszą być liczbą dodatnią");
         }
 
         this.addPoints(student, points);

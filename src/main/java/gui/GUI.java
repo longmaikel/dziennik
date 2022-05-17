@@ -1,9 +1,6 @@
 package gui;
 
-import model.ClassContainer;
-import model.Classroom;
-import model.Student;
-import model.StudentCondition;
+import model.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -122,14 +119,24 @@ public class GUI implements ActionListener {
                 List<Student> studentList = this.classroomsTable.getClassroomStudents();
                 this.studentsTable.setStudents(studentList);
             }
+            case Actions.STUDENT_SORT_ALPHABET -> this.sortStudentsAlphabet();
+            case Actions.STUDENT_SORT_POINTS -> this.sortStudentsByPoints();
         }
 
 
     }
 
+    private void sortStudentsByPoints() {
+        this.studentsTable.setStudents(this.classroomsTable.sortStudentsByPoints());
+    }
+
+    private void sortStudentsAlphabet() {
+        this.studentsTable.setStudents(this.classroomsTable.sortStudentsAlphabet());
+    }
+
     private void deleteStudent() {
         String studentLastname = this.studentsTable.getSelectedStudent();
-        if (studentLastname == null){
+        if (studentLastname == null) {
             JOptionPane.showMessageDialog(null, "Zaznacz ucznia.");
             return;
         }
@@ -233,14 +240,12 @@ public class GUI implements ActionListener {
         double points;
         try {
             birthYear = Integer.parseInt(JOptionPane.showInputDialog(this.frame, "Rok urodzenia:"));
-            //@todo walidacja mnijesze niz obecny rok
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "Niepoprawny rok urodzenia");
             return;
         }
         try {
             points = Double.parseDouble(JOptionPane.showInputDialog(this.frame, "Punkty:"));
-            //@todo validacja nieujemne
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "Niepoprawna ilość punktów");
             return;
@@ -256,7 +261,15 @@ public class GUI implements ActionListener {
                 ).toString()
         );
         Student student = new Student(sName, sLastname, birthYear, points, sCondition);
-        classroom.addStudent(student);
+        try {
+            classroom.addStudent(student);
+        } catch (FulfilledClassroomException ex) {
+            JOptionPane.showMessageDialog(null, "Klasa jest już pełna");
+            return;
+        } catch (StudentAlreadyAddedToClassroomException ex){
+            JOptionPane.showMessageDialog(null, "Student został już dodany do klasy");
+            return;
+        }
         this.classroomsTable.fireTableDataChanged();
         this.studentsTable.setStudents(classroom.getStudents());
     }
