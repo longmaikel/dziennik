@@ -5,20 +5,27 @@ import model.Classroom;
 import model.Student;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 public class ClassroomsTable {
     private final JTable table;
     private final ClassroomsTableModel model;
     private final ClassContainer classContainer;
+    private ListSelectionListener listener;
 
 
-    public ClassroomsTable(ClassContainer classContainer) {
+    public ClassroomsTable(ClassContainer classContainer, ListSelectionListener listener) {
+        this.listener = listener;
         this.classContainer = classContainer;
         this.model = new ClassroomsTableModel(this.classContainer.getAll());
 
         this.table = new JTable(this.model);
         this.table.setBounds(30, 40, 200, 300);
+        this.table.getSelectionModel().addListSelectionListener(this.listener);
     }
 
     public JTable getTable() {

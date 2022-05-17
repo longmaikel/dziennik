@@ -3,6 +3,8 @@ package gui;
 import model.*;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class GUI implements ActionListener {
+public class GUI implements ActionListener, ListSelectionListener {
 
     private final GridBagLayout btnGrid;
     private final GridBagConstraints btnGridSettings;
@@ -27,7 +29,6 @@ public class GUI implements ActionListener {
     private final JButton deleteStudentBtn;
     private final JButton sortStudentBtn;
     private final JButton sortStudentByPointsBtn;
-    private final JButton showStudentsBtn;
 
     private final ClassroomsTable classroomsTable;
     private final JScrollPane classroomTablePanel;
@@ -55,7 +56,6 @@ public class GUI implements ActionListener {
         this.addStudentBtn = new JButton();
         this.editStudentBtn = new JButton();
         this.deleteStudentBtn = new JButton();
-        this.showStudentsBtn = new JButton();
         this.sortStudentBtn = new JButton();
         this.sortStudentByPointsBtn = new JButton();
 
@@ -65,8 +65,7 @@ public class GUI implements ActionListener {
                 .setBtn(this.addStudentBtn,"Dodaj studenta", Actions.ADD_STUDENT, 3,0)
                 .setBtn(this.editStudentBtn,"Edytuj studenta", Actions.EDIT_STUDENT, 4,0)
                 .setBtn(this.deleteStudentBtn,"Usuń studenta", Actions.DELETE_STUDENT, 5,0)
-                .setBtn(this.showStudentsBtn,"Pokaż studentów", Actions.SHOW_STUDENTS, 0,1)
-                .setBtn(this.sortStudentBtn,"Sortuj studentów alfabetycznie", Actions.STUDENT_SORT_ALPHABET, 2,1)
+                .setBtn(this.sortStudentBtn,"Sortuj studentów alfabetycznie", Actions.STUDENT_SORT_ALPHABET, 0,1)
                 .setBtn(this.sortStudentByPointsBtn,"Sortuj studentów po punktach", Actions.STUDENT_SORT_POINTS, 4,1);
 
         // working panel
@@ -74,7 +73,7 @@ public class GUI implements ActionListener {
         this.mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
 
         ClassContainer classContainer = new ClassContainer();
-        this.classroomsTable = new ClassroomsTable(classContainer);
+        this.classroomsTable = new ClassroomsTable(classContainer, this);
         this.classroomTablePanel = new JScrollPane(this.classroomsTable.getTable());
 
         ArrayList<Student> students = new ArrayList<>();
@@ -115,10 +114,6 @@ public class GUI implements ActionListener {
             case Actions.ADD_STUDENT -> this.addStudent();
             case Actions.EDIT_STUDENT -> this.editStudent();
             case Actions.DELETE_STUDENT -> this.deleteStudent();
-            case Actions.SHOW_STUDENTS -> {
-                List<Student> studentList = this.classroomsTable.getClassroomStudents();
-                this.studentsTable.setStudents(studentList);
-            }
             case Actions.STUDENT_SORT_ALPHABET -> this.sortStudentsAlphabet();
             case Actions.STUDENT_SORT_POINTS -> this.sortStudentsByPoints();
         }
@@ -126,12 +121,19 @@ public class GUI implements ActionListener {
 
     }
 
+    private void showStudents() {
+        List<Student> studentList = this.classroomsTable.getClassroomStudents();
+        this.studentsTable.setStudents(studentList);
+    }
+
     private void sortStudentsByPoints() {
-        this.studentsTable.setStudents(this.classroomsTable.sortStudentsByPoints());
+        List<Student> students = this.classroomsTable.sortStudentsByPoints();
+        this.studentsTable.setStudents(students);
     }
 
     private void sortStudentsAlphabet() {
-        this.studentsTable.setStudents(this.classroomsTable.sortStudentsAlphabet());
+        List<Student> students = this.classroomsTable.sortStudentsAlphabet();
+        this.studentsTable.setStudents(students);
     }
 
     private void deleteStudent() {
@@ -272,5 +274,10 @@ public class GUI implements ActionListener {
         }
         this.classroomsTable.fireTableDataChanged();
         this.studentsTable.setStudents(classroom.getStudents());
+    }
+
+    @Override
+    public void valueChanged(ListSelectionEvent e) {
+        this.showStudents();
     }
 }
